@@ -1,0 +1,435 @@
+#include "client.h"
+
+Client::Client(QWidget *parent) : QDialog(parent) {
+    scene = new Scene();
+
+    scene->setFixedSize(805,375);
+
+    connectButton = new QPushButton(tr("Connect"));
+
+    newGameButton = new QPushButton(tr("New game"));
+    newGameButton->setEnabled(false);
+
+    startButton = new QPushButton(tr("Start"));
+    startButton->setEnabled(false);
+
+    quitButton = new QPushButton(tr("Quit"));
+
+    connectButton->setFixedHeight(35);
+
+    newGameButton->setFixedHeight(35);
+    startButton->setFixedHeight(35);
+
+    quitButton->setFixedHeight(35);
+
+    mainLayout = new QHBoxLayout();
+
+    leftLayout = new QVBoxLayout();
+
+    msg = new QLabel();
+    msg->setText(tr("Disconnect..."));
+
+    leftLayout->addWidget(scene);
+
+    //*************************************************
+    paramLayout = new QHBoxLayout();
+
+    sizeLabel = new QLabel("Current size is: " + QString::number(0));
+    sizeLabel->setFixedWidth(160);
+    levelLabel = new QLabel("The level is: none");
+    levelLabel->setFixedWidth(160);
+
+    setStyle(sizeLabel,"QLabel.css");
+    setStyle(levelLabel,"QLabel.css");
+
+    //spacer = new QSpacerItem(5, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+    paramLayout->addWidget(sizeLabel);
+    paramLayout->addStretch(1);
+    //paramLayout->addSpacerItem(spacer);
+    paramLayout->addWidget(levelLabel);
+    paramLayout->addStretch(1);
+
+    //############################################################
+    QBrush brush(Qt::blue, Qt::SolidPattern);
+//    brush.setColor(Qt::blue);
+//    brush.setStyle(Qt::SolidPattern);
+
+    QPolygon poly;
+    poly << QPoint(0,0) << QPoint(0,15) << QPoint(15,15) << QPoint(15,0);
+
+    QPainterPath path;
+    path.addPolygon(poly);
+    QRoundRe
+
+    QPixmap pix1(15,15); // создаём пустой QPixmap размером 100x100
+
+    QPainter p(&pix1);
+
+
+    //p.setBrush(brush);
+    //p.drawRect(0, 0, width()/2, height());
+    p.fillPath(path, brush);
+
+    //paramLayout->addItem(p);
+
+//    QPainter painter(&pix1);
+
+//    painter.setBrush(Qt::cyan);
+//    painter.setPen(Qt::darkCyan);
+//    painter.drawRect(0, 0, 100,100);
+
+
+    image = new QLabel();
+    image->setScaledContents(true);
+    image->setPixmap(pix1);
+    image->setFixedSize(15,15);
+
+    paramLayout->addWidget(image);
+    paramLayout->addStretch(1);
+    //############################################################
+
+    //*************************************************
+
+    status = new QStatusBar();
+    status->addWidget(msg,1);
+
+    leftLayout->addLayout(paramLayout);
+
+    //leftLayout->addWidget(sizeLabel);
+    leftLayout->addWidget(status);
+
+    rightLayout = new QVBoxLayout();
+
+    rightLayout->addWidget(connectButton);
+    rightLayout->addWidget(newGameButton);
+    rightLayout->addWidget(startButton);
+
+    groupBox = new QGroupBox(tr("Settings:"));
+    groupBox->setFixedWidth(135);
+
+    setStyle(groupBox,"QGroupBox.css");
+
+    radioHigh = new QRadioButton(tr("High"));
+    radioMedium = new QRadioButton(tr("Medium"));
+    radioLow = new QRadioButton(tr("Low"));
+
+    radioLow->setChecked(true);
+
+    editSize = new QLineEdit();
+    editFine = new QLineEdit();
+
+    editSize->setText(QString::number(15));
+    editFine->setText(QString::number(1));
+
+    editSize->setFixedSize(25, 25);
+    editFine->setFixedSize(25, 25);
+
+    labelSize = new QLabel(tr("Max size"));
+    labelFine = new QLabel(("Fine"));
+
+    sizeLayout = new QHBoxLayout();
+    fineLayout = new QHBoxLayout();
+
+    sizeLayout->addWidget(editSize);
+    sizeLayout->addWidget(labelSize);
+
+    fineLayout->addWidget(editFine);
+    fineLayout->addWidget(labelFine);
+
+    settingsLayout = new QVBoxLayout();
+
+    settingsLayout->addWidget(radioHigh);
+    settingsLayout->addWidget(radioMedium);
+    settingsLayout->addWidget(radioLow);
+
+    settingsLayout->addLayout(sizeLayout);
+    settingsLayout->addLayout(fineLayout);
+
+    groupBox->setLayout(settingsLayout);
+
+    rightLayout->addWidget(groupBox);
+
+    rightLayout->addStretch(1);
+
+    rightLayout->addWidget(quitButton);
+
+    mainLayout->addLayout(leftLayout);
+    mainLayout->addLayout(rightLayout);
+
+    tcpClient = new QTcpSocket(this);
+
+    this->_blockSize = 0;
+    sizes.reserve(2);
+
+    connect(tcpClient, SIGNAL(disconnected()), this, SLOT(lostConnection()));
+
+    connect(tcpClient, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+
+    connect(connectButton, SIGNAL(clicked()), this, SLOT(connectToServer()));
+    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(tcpClient, SIGNAL(connected()), this, SLOT(onConnected()));
+
+    connect(newGameButton, SIGNAL(clicked()), this, SLOT(sendRequest()));
+    connect(startButton, SIGNAL(clicked()), this, SLOT(sendRequest()));
+
+
+    connect(scene, SIGNAL(setValue(int)), this, SLOT(sendData(int)));
+
+    this->setLayout(mainLayout);
+}
+
+void Client::connectToServer(void) {
+
+    tcpClient->connectToHost("127.0.0.1", 3425);
+
+    if (!tcpClient->waitForConnected(30000)) {
+        qDebug() << "Error: " << tcpClient->errorString();
+
+    } else {
+        status->showMessage("Connected to: 127.0.0.1.");
+    }
+}
+
+void Client::onConnected(void) {
+
+    qDebug() << "Sending...";   //*********************************
+
+    QByteArray block;
+    QDataStream stream(&block, QIODevice::WriteOnly);
+
+    stream << "+REGISTER\r\n";
+
+    connectButton->setEnabled(false);
+    newGameButton->setEnabled(true);
+
+    tcpClient->write(block);
+}
+
+void Client::sendRequest(void) {
+
+    QByteArray block;
+    QDataStream outStream(&block, QIODevice::WriteOnly);
+
+    if (QObject::sender() == startButton) {
+        outStream << "+START_GAME\r\n";
+        startButton->setEnabled(false);
+    } else {
+        outStream << "+NEW_GAME\r\n";
+        //*************************************************************************
+        bool ok;
+        int size = editSize->text().toInt(&ok,10);
+        outStream << size;
+
+        int fine = editFine->text().toInt(&ok,10);
+        outStream << fine;
+
+        if (radioLow->isChecked()) {
+            outStream << radioLow->text();
+        } else if (radioMedium->isChecked()) {
+            outStream<< radioMedium->text();
+        } else if (radioHigh->isChecked()) {
+            outStream << radioHigh->text();
+        }
+        //*************************************************************************
+        newGameButton->setEnabled(false);
+        startButton->setEnabled(true);
+    }
+
+    scene->setFocus();
+    tcpClient->write(block);
+}
+
+void Client::onReadyRead(void) {
+
+    qDebug() << "Reading...";   //**************************
+
+    QDataStream inStream(tcpClient);
+
+    if (this->_blockSize == 0) {
+        if (tcpClient->bytesAvailable() < (int)sizeof(quint16)) {
+            inStream >> this->_blockSize;
+
+            if (this->_blockSize == 0x0000) {
+                this->_blockSize = quint16(0);
+                scene->setState(false);
+                //qDebug() << "IN THERE";
+            }
+            return;
+        }
+    }
+
+    if (scene->getState()) {                           /* start game */
+        scene->clearList();
+        recvData(scene->getList());
+
+        scene->updateGL();
+        sizeLabel->setText("Current size is: " + QString::number(sizes.at(this->order)));
+        sizes.clear();
+    } else {
+        QString msgData;
+        QByteArray block;
+
+        inStream >> block;
+        msgData = block.constData();
+
+        qDebug() << msgData;   //*******************************
+
+        if (msgData == "+OK\r\n") {                    /* register client */
+            inStream >> block;
+            this->uuid = block.constData();
+
+        } else if (msgData == "+TRANSMIT\r\n") {
+            inStream >> block;
+            //this->level = block.constData();
+
+            levelLabel->setText(block.constData());
+
+            //qDebug() << "THE LEVEL: " << this->level;  //******************************
+
+            block.clear();
+            inStream >> block;
+            this->color = block.constData();
+
+            //qDebug() << "THE COLOR: " << this->color;  //***************************
+
+            block.clear();
+            inStream >> this->order;
+
+            //qDebug() << "ORDER IS: " << this->order; //**********************************
+
+            scene->setState(true);
+        } else if (msgData == "+GAME_OVER\r\n") {
+            //qDebug() << "GAME OVER!!!"; //*****************************************
+            QString _msgResult;
+            block.clear(); inStream >> block;
+            _msgResult = (getUuid() == block.constData()) ? "You win":"You lose";
+
+            QMessageBox *msgBox = new QMessageBox();
+
+            msgBox->setIcon(QMessageBox::Information);
+            msgBox->setWindowTitle("Game over");
+            msgBox->setText(_msgResult+". You can start a new game");
+            msgBox->setDefaultButton(QMessageBox::Ok);
+
+            newGameButton->setEnabled(true);
+            levelLabel->setText(tr("None"));
+
+            scene->setState(false);
+
+            msgBox->show();
+        } else if (msgData == "+CRASH_GAME\r\n") {
+            qDebug() << "CRASH_GAME!!!"; //*****************************************
+
+            QMessageBox *msgBox = new QMessageBox();
+
+            msgBox->setIcon(QMessageBox::Critical);
+            msgBox->setWindowTitle("Connection lost");
+            msgBox->setText("Rival was disconnected.");
+            msgBox->setDefaultButton(QMessageBox::Ok);
+
+            msgBox->show();
+        }
+    }
+}
+
+void Client::recvData(QList<Point*> &_listPoint) {
+
+    qDebug() << "Getting data...";   //********************************
+
+    int COUNT;
+
+    QDataStream inStream(tcpClient);
+
+    scene->resetCount(0);
+
+    forever {
+        inStream >> this->_blockSize;
+
+        if (this->_blockSize == 0xFFFF) {
+            qDebug() << "IN THERE";
+            this->_blockSize = quint16(0);  //????????????????
+            _listPoint.removeLast();
+            break;
+        }
+
+        //qDebug() << "Block size: " << this->_blockSize;   //********************************
+
+        COUNT = this->_blockSize/(sizeof(int));
+        if (this->sizes.size() != 2) {
+            this->sizes << COUNT;
+        }
+
+        //qDebug() << "COUNT OF LIST :" << COUNT;    //**************************************
+
+
+        for (int index = 0; index < COUNT; index++) {
+            Point *point = new  Point();
+
+            inStream >> point->xPos;
+            inStream >> point->yPos;
+
+            qDebug() << point->xPos << ' ' << point->yPos;
+
+            _listPoint.append(point);
+        }
+
+        _listPoint.append(NULL);
+
+        scene->setCount(1);
+
+        this->_blockSize = quint16(0);    //?????????????????????????
+    }
+}
+
+void Client::sendData(int _direction) {
+
+    QByteArray buffer;
+    QDataStream outStream(&buffer, QIODevice::WriteOnly);
+
+    outStream << quint16(_direction);
+    outStream << this->uuid.toString().toStdString().c_str();
+
+    tcpClient->write(buffer);
+}
+
+void Client::lostConnection(void) {
+
+    QMessageBox msgBox;
+
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.setWindowTitle("Connection lost");
+    msgBox.setText("The connection to the server was lost");
+    msgBox.setStandardButtons(QMessageBox::Ok);
+
+    connectButton->setEnabled(true);
+    newGameButton->setEnabled(false);
+
+    if (startButton->isEnabled()) {
+        startButton->setEnabled(false);
+    }
+
+    scene->setState(false);
+    tcpClient->close();
+
+    msgBox.exec();
+}
+
+void Client::setStyle(QWidget *_group, QString widget) {
+    QFile styleF;
+
+    styleF.setFileName(QDir::homePath() + "/client/Style/" + widget.toStdString().c_str());
+    styleF.open(QFile::ReadOnly);
+
+    QString qssStr = styleF.readAll();
+
+    _group->setStyleSheet(qssStr);
+}
+
+QString Client::getUuid(void) {
+    return this->uuid.toString();
+}
+
+Client::~Client() {
+    /**/
+}
