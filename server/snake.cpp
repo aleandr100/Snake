@@ -12,7 +12,6 @@ Snake::Snake(int _size, int _startPosx, int _startPosy) {
     blocks.push_back(new Block(_startPosx, _startPosy-1));
     blocks.push_back(new Block(_startPosx, _startPosy-2));
 
-
     blocks.push_back(new Block());
 }
 
