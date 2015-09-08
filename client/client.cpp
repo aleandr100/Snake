@@ -362,7 +362,7 @@ void Client::lostConnection(void) {
 void Client::setStyle(QWidget *_group, QString widget) {
     QFile styleF;
 
-    styleF.setFileName(QDir::homePath() + "/client/Style/" + widget.toStdString().c_str());
+    styleF.setFileName(QDir::homePath() + "/Snake/client/Style/" + widget.toStdString().c_str());
     styleF.open(QFile::ReadOnly);
 
     QString qssStr = styleF.readAll();

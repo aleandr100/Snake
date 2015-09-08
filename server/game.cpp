@@ -125,7 +125,6 @@ QString Game::getUuid(Snake *_snk, int _key) {
     return NULL;
 }
 
-
 QString Game::_checkInc(Snake *_snk) {
     if (equal) {
         return getUuid(_snk,EQUAL);
