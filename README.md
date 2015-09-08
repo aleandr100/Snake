@@ -13,7 +13,8 @@ Rules:
 - If a snake crashes into the edge of the playing field, it automatically loses;
 - If the snake bumps into itself, or into another snake (except eaten tail or "neck" other snakes), from its length subtracted the value of the penalty (specified when creating the game), and is compared with the length of the snake-competitor who has more, he also won.
 
-![venn diagram](https://cloud.githubusercontent.com/assets/210413/5077572/30dfc2f0-6e6a-11e4-9723-07c918128f4f.png)
+Main window:
+![main_window](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/main_window.png)
 
 This project is in early pre-release. Angular Material is both a reference implementation of
 Material Design and a complementary effort to the [Polymer](https://www.polymer-project.org/)
