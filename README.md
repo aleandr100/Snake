@@ -37,14 +37,14 @@ Snake is targeted for all platforms with support "OpenGL".
 
 #### Linux:
 (At first start the console and go to the folder with the project)
-	```
-	cd Snake/client/
-	#There is your path to qmake
-	/home/maxim/Qt5.5.0/5.5/gcc_64/bin/qmake -project
-	/home/maxim/Qt5.5.0/5.5/gcc_64/bin/qmake client.pro
-	make
-	#Well done to build "server"
-	```
+```
+cd Snake/client/
+#There is your path to qmake
+/home/maxim/Qt5.5.0/5.5/gcc_64/bin/qmake -project
+/home/maxim/Qt5.5.0/5.5/gcc_64/bin/qmake client.pro
+make
+#Well done to build "server"
+```
 #### Windows:
 (If you are using Windows and installed version of Qt Open
 source code with the compiler MinGW, you get a shortcut to the window MS-
@@ -52,11 +52,11 @@ DOS, in which environment variables are set up correctly on Qt. Calling this win
 you can compile it into Qt-applications using the above
 Team qmake and make. Generated executables are placed in a folder
 debug or release "for example, C:\qt-book\hello\release\hello.exe")
-	```
-	dir Snake/client/
-	qmake -tp vc hello.pro
-	nmake
-	```
+```
+ dir Snake/client/
+ qmake -tp vc hello.pro
+ nmake
+```
 #### Mac OS X:
 (If you are using Xcode on Mac OS X, you can generate an Xcode project using the following command)
 	```
