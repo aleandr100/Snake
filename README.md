@@ -13,7 +13,7 @@ Rules:
 - If a snake crashes into the edge of the playing field, it automatically loses;
 - If the snake bumps into itself, or into another snake (except eaten tail or "neck" other snakes), from its length subtracted the value of the penalty (specified when creating the game), and is compared with the length of the snake-competitor who has more, he also won.
 
-![main window](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/main_window.png)
+[main window](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/main_window.png)
 
 Quick Links:
 
@@ -32,6 +32,12 @@ Quick Links:
 
 - First screen during the game
 - Two snakes with size 7 (blue) and 8 (pink)
+
+[out of the abord](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/out_of_the_abroad.png)
+
+
+
+
 
 ## <a name="building"></a> Building
 
