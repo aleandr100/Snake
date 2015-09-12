@@ -26,14 +26,13 @@ Quick Links:
 
 ## <a name="demos"></a> Demos
 **During the game**
-<div style="border: 1px solid #ccc">
-  <img src="https://raw.githubusercontent.com/aleandr100/Snake/master/resources/during_the_game.png" style="display:block;">
-</div>
+![during the game](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/during_the_game.png)
 
 - First screen during the game
 - Two snakes with size 7 (blue) and 8 (pink)
 
-[out of the abord](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/out_of_the_abroad.png)
+**out of the abord**
+![out of the abord](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/out_of_the_abroad.png)
 
 ## <a name="building"></a> Building
 
