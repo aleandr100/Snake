@@ -31,8 +31,20 @@ Quick Links:
 - First screen during the game
 - Two snakes with size 7 (blue) and 8 (pink)
 
-**out of the abord**
+**Out of the abord**
 ![out of the abord](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/out_of_the_abroad.png)
+
+**On max size**
+![on max size](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/on_max_size.png)
+
+**Collision**
+![collision](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/collision.png)
+
+**Bite in the neck**
+![bite in the neck](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/bite_in_the_neck.png)
+
+**Bite in the body**
+![bite in the body](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/bite_in_the_body.png)
 
 ## <a name="building"></a> Building
 
