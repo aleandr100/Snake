@@ -21,8 +21,8 @@ Quick Links:
 *  [Building](#building)
 *  [Installing](#installing)
 
-Please note that using "Qt Snake" requires the use of **Qt 4.8.x** or higher. Qt
-Snake is targeted for all platforms with support "OpenGL".
+> Please note that using "Qt Snake" requires the use of **Qt 4.8.x** or higher. Qt
+  Snake is targeted for all platforms with support "OpenGL".
 
 ## <a name="demos"></a> Demos
 **During the game**
@@ -86,13 +86,13 @@ This part will show how to install the glut libraries and dll's (to download it 
 3. Copy both **glut.dll** and **glut32.dll** into your windows directory (windows or winnt, depends on if you are using Windows95/98 or Windows NT)
 4. Copy your **glut.h** to:
 <drive>:\<VC++ path>\include\GL\glut.h
-# put the drive where you installed VC++ instead of the <drive>
-# put the directory where you installed VC++ instead of the <VC++ path>
+*put the drive where you installed VC++ instead of the <drive>*
+*put the directory where you installed VC++ instead of the <VC++ path>*
 5. Copy your **glut.lib** and **glut32.lib** to:
 <drive>:\<VC++ path>\lib\glut.lib
 <drive>:\<VC++ path>\lib\glut32.lib
-# put the drive where you installed VC++ instead of the <drive>
-# put the directory where you installed VC++ instead of the <VC++ path>
+*put the drive where you installed VC++ instead of the <drive>*
+*put the directory where you installed VC++ instead of the <VC++ path>*
 6. That should be it for installed the glut libraries. The rest of this letter shows you how to setup VC++ so that you can use the glut libraries.
 This will show you how to start up an opengl project and setup the setting so that you will be able to compile and run the program. This is assuming that you have already downloaded the appropriatefiles and installed them in the directories that there documentation tell you to. If you have not done that you need to do it before you can run or write an opengl program.
 
