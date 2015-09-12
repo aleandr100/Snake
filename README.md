@@ -34,17 +34,29 @@ Quick Links:
 **Out of the abord**
 ![out of the abord](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/out_of_the_abroad.png)
 
+- The pink snake out of the border and lose 
+
 **On max size**
 ![on max size](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/on_max_size.png)
+
+- The blue snake reached victorious length and win
 
 **Collision**
 ![collision](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/collision.png)
 
+- The blue snake bite in the body (not in neck and not in tail)
+- End of game the pink snake is win
+
 **Bite in the neck**
 ![bite in the neck](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/bite_in_the_neck.png)
 
+- The pink snake bite in the neck and win
+
 **Bite in the body**
 ![bite in the body](https://raw.githubusercontent.com/aleandr100/Snake/master/resources/bite_in_the_body.png)
+
+- The pink snake bite yourself, she got a fine and compare the size with rival
+- The pink snake is win
 
 ## <a name="building"></a> Building
 
