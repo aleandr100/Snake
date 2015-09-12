@@ -122,12 +122,12 @@ This part will show how to install the glut libraries and dll's (to download it 
 This will show you how to start up an opengl project and setup the setting so that you will be able to compile and run the program. This is assuming that you have already downloaded the appropriatefiles and installed them in the directories that there documentation tell you to. If you have not done that you need to do it before you can run or write an opengl program.
 
 7. Start VC++ and create a new project.
-8. The project has to be a "Win32 Console Application"
+8. The project has to be a "*Win32 Console Application*"
 9. Type in the name of the project and where it will be on your hard drive.
 10. Chose an empty project and click next or finish
 11. First thing you need to do when the project opens up is to click on the "Project" menu item from the top.
-12. Chose "Settings" (a window will come up)
-13. On the left side of the window there are tabs, chose the "Link" tab
+12. Chose "*Settings*" (a window will come up)
+13. On the left side of the window there are tabs, chose the "*Link*" tab
 14. The string field labeled "Object/library modules" has a few lib files already set in it
 15. Go to the end of this string field and enter:
 ``` opengl32.lib glut32.lib glu32.lib ```
