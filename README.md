@@ -53,15 +53,15 @@ you can compile it into Qt-applications using the above
 Team qmake and make. Generated executables are placed in a folder
 debug or release "for example, C:\qt-book\hello\release\hello.exe")
 ```
- dir Snake/client/
- qmake -tp vc hello.pro
- nmake
+dir Snake/client/
+qmake -tp vc hello.pro
+nmake
 ```
 #### Mac OS X:
 (If you are using Xcode on Mac OS X, you can generate an Xcode project using the following command)
-	```
-	qmake -spec macx-xcode hello.pro
-	```
+```
+qmake -spec macx-xcode hello.pro
+```
 
 ## <a name="installing"></a> Installing
 
