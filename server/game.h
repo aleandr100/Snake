@@ -7,8 +7,8 @@
 #include "snake.h"
 #include "food.h"
 
-#define EQUAL 100
-#define NOT_EQUAL 101
+const int EQUAL = 100;
+const int NOT_EQUAL = 101;
 
 class Game : public QObject
 {
@@ -31,8 +31,8 @@ public:
 
     QString getUuid(Snake *_snk, int _key);
 
-    QString _cmpSize(void);
-    QString _checkInc(Snake *_snk);
+    QString cmpSize(void);
+    QString checkInc(Snake *_snk);
 
     void checkSize(void);
 

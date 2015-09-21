@@ -98,9 +98,9 @@ void Game::getWinner(int _event) {
                         break;
        case BITE_NECK:  this->winner = getUuid(_snk,EQUAL);
                         break;
-       case INCREASE:   this->winner = _checkInc(_snk);
+       case INCREASE:   this->winner = checkInc(_snk);
                         break;
-       case DECREASE:   this->winner = _cmpSize();
+       case DECREASE:   this->winner = cmpSize();
                         break;
        default:
                         break;
@@ -125,7 +125,7 @@ QString Game::getUuid(Snake *_snk, int _key) {
     return NULL;
 }
 
-QString Game::_checkInc(Snake *_snk) {
+QString Game::checkInc(Snake *_snk) {
     if (equal) {
         return getUuid(_snk,EQUAL);
     }
@@ -145,7 +145,7 @@ void Game::checkSize(void) {
     }
 }
 
-QString Game::_cmpSize(void) {
+QString Game::cmpSize(void) {
 
     Snake *_first = players[0].second;
     Snake *_second = players[1].second;

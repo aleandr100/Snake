@@ -5,16 +5,16 @@
 #include <QMetaType>
 #include <QDebug>
 
+#include "block.h"
+
 #define WIDTH  35
 #define HEIGHT 20
 
-#define EVENT_MOVE 100
-#define BITE_NECK  101
+const int EVENT_MOVE = 100;
+const int BITE_NECK =  101;
 
-#define DECREASE 102
-#define INCREASE  103
-
-#include "block.h"
+const int DECREASE = 102;
+const int INCREASE =  103;
 
 class Food;
 

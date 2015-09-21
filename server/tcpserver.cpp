@@ -1,13 +1,13 @@
 #include "client.h"
 #include "tcpserver.h"
 
-#define FREE 100
-#define BUSY 101
+const int FREE = 100;
+const int BUSY = 101;
 
 #define WRITELOCK(x) lock.lockForWrite(); (x); lock.unlock()
 
 TcpServer::TcpServer(int _maxConnections, QObject *parent) : QTcpServer(parent) {
-    game = new Game();
+    game = new Game;
 
     this->isInit = false;
 
@@ -43,7 +43,7 @@ void TcpServer::startServer(void) {
 void TcpServer::incomingConnection(qintptr socketDescriptor) {
 
     if (threadPool.size() < maxConnections) {
-        QThread *thread = new QThread();
+        QThread *thread = new QThread;
         Client *client = new Client(socketDescriptor);
         client->moveToThread(thread);
 

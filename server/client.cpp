@@ -8,7 +8,7 @@ Client::Client(qintptr _socketDescriptor) {
 
 void Client::run(void) {
 
-    tcpSocket = new QTcpSocket();
+    tcpSocket = new QTcpSocket;
     if (!tcpSocket->setSocketDescriptor(this->socketDescriptor)) {
         emit error(tcpSocket->error());
         return;

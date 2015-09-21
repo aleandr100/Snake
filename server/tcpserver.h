@@ -2,8 +2,8 @@
 #define SERVER_H
 
 #include <QTcpServer>
-#include <QTimer>
 #include <QReadWriteLock>
+#include <QTimer>
 
 #include "game.h"
 

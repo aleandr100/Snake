@@ -1,7 +1,7 @@
 #include "client.h"
 
 Client::Client(QWidget *parent) : QDialog(parent) {
-    scene = new Scene();
+    scene = new Scene;
 
     scene->setFixedSize(805,375);
 
@@ -22,16 +22,16 @@ Client::Client(QWidget *parent) : QDialog(parent) {
 
     quitButton->setFixedHeight(35);
 
-    mainLayout = new QHBoxLayout();
+    mainLayout = new QHBoxLayout;
 
-    leftLayout = new QVBoxLayout();
+    leftLayout = new QVBoxLayout;
 
-    msg = new QLabel();
+    msg = new QLabel;
     msg->setText(tr("Disconnect..."));
 
     leftLayout->addWidget(scene);
 
-    paramLayout = new QHBoxLayout();
+    paramLayout = new QHBoxLayout;
 
     sizeLabel = new QLabel("Current size is: " + QString::number(0));
     sizeLabel->setFixedWidth(160);
@@ -51,7 +51,7 @@ Client::Client(QWidget *parent) : QDialog(parent) {
 
     colorLabel = new QLabel(tr("Color: "));
     setStyle(colorLabel,"QLabel.css");
-    imageLabel = new QLabel();
+    imageLabel = new QLabel;
     setColor(QColor (204,204,204));
 
     paramLayout->addWidget(colorLabel);
@@ -59,14 +59,14 @@ Client::Client(QWidget *parent) : QDialog(parent) {
 
     paramLayout->addStretch(1);
 
-    status = new QStatusBar();
+    status = new QStatusBar;
     status->addWidget(msg,1);
 
     leftLayout->addLayout(paramLayout);
 
     leftLayout->addWidget(status);
 
-    rightLayout = new QVBoxLayout();
+    rightLayout = new QVBoxLayout;
 
     rightLayout->addWidget(connectButton);
     rightLayout->addWidget(newGameButton);
@@ -83,8 +83,8 @@ Client::Client(QWidget *parent) : QDialog(parent) {
 
     radioLow->setChecked(true);
 
-    editSize = new QLineEdit();
-    editFine = new QLineEdit();
+    editSize = new QLineEdit;
+    editFine = new QLineEdit;
 
     editSize->setText(QString::number(15));
     editFine->setText(QString::number(1));
@@ -95,8 +95,8 @@ Client::Client(QWidget *parent) : QDialog(parent) {
     labelSize = new QLabel(tr("Max size"));
     labelFine = new QLabel(("Fine"));
 
-    sizeLayout = new QHBoxLayout();
-    fineLayout = new QHBoxLayout();
+    sizeLayout = new QHBoxLayout;
+    fineLayout = new QHBoxLayout;
 
     sizeLayout->addWidget(editSize);
     sizeLayout->addWidget(labelSize);
@@ -104,7 +104,7 @@ Client::Client(QWidget *parent) : QDialog(parent) {
     fineLayout->addWidget(editFine);
     fineLayout->addWidget(labelFine);
 
-    settingsLayout = new QVBoxLayout();
+    settingsLayout = new QVBoxLayout;
 
     settingsLayout->addWidget(radioHigh);
     settingsLayout->addWidget(radioMedium);
